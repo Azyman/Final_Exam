@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTests {
 
-    public WebDriver driver;
+    public static WebDriver driver;
     protected LandingPage landingPage;
     String BASEURL = "https://katalon-demo-cura.herokuapp.com/";
     @BeforeMethod
@@ -28,6 +28,7 @@ public class BaseTests {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().deleteAllCookies();
         driver.get(BASEURL);
         landingPage = new LandingPage(driver);
     }

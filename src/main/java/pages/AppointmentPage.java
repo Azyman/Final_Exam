@@ -1,8 +1,10 @@
 package pages;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 public class AppointmentPage {
@@ -39,6 +41,10 @@ public class AppointmentPage {
     @CacheLookup
     WebElement book_appointment_btn;
 
+    public AppointmentPage(WebDriver driver){
+        PageFactory.initElements(driver,this);
+    }
+
     public void selectFacility(int index){
         Select facilities = new Select(facility);
         facilities.selectByIndex(index);
@@ -49,7 +55,18 @@ public class AppointmentPage {
     }
 
     public void selectHealthProgram(){
-
+        program_medicare.click();
     }
 
+    public void selectVisitDate(String visit_date1){
+        visit_date.sendKeys(visit_date1);
+    }
+
+    public void setComment(String comment){
+        comment_area.sendKeys(comment);
+    }
+
+    public void clickBookAppointment(){
+        book_appointment_btn.click();
+    }
 }

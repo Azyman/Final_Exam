@@ -1,18 +1,18 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.AppointmentPage;
 import pages.LoginPage;
 
 public class LoginPageTest extends BaseTests{
-
-
+    public LoginPage loginPage;
     @Test(dataProvider = "loginCredentials")
     public void login(String uname, String pword){
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver);
         landingPage.clickMakeAppointment();
-        AppointmentPage login = loginPage.login(uname, pword);
+        Assert.assertEquals(loginPage.verifyLoginText(),"Please login to make appointment.");
+        loginPage.login(uname, pword);
     }
 
     @DataProvider
