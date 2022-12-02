@@ -8,7 +8,7 @@ import pages.LoginPage;
 public class LoginPageTest extends BaseTests{
     public LoginPage loginPage;
     @Test(dataProvider = "loginCredentials")
-    public void login(String uname, String pword){
+    public void loginTest(String uname, String pword){
         loginPage = new LoginPage(driver);
         landingPage.clickMakeAppointment();
         Assert.assertEquals(loginPage.verifyLoginText(),"Please login to make appointment.");

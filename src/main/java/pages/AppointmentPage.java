@@ -13,7 +13,7 @@ public class AppointmentPage {
     @CacheLookup
     WebElement facility;
 
-    @FindBy(id = "chk_hospotal_readmission")
+    @FindBy(xpath = "//input[@name='hospital_readmission']")
     @CacheLookup
     WebElement readmission_chk_box;
 
@@ -41,8 +41,24 @@ public class AppointmentPage {
     @CacheLookup
     WebElement book_appointment_btn;
 
+    @FindBy(xpath = "//h2[contains(text(),'Make Appointment')]")
+    @CacheLookup
+    WebElement appointmentPageText;
+
+    @FindBy(xpath = "//h2[contains(text(),'Appointment Confirmation')]")
+    @CacheLookup
+    WebElement appointmentConfirmationText;
+
     public AppointmentPage(WebDriver driver){
         PageFactory.initElements(driver,this);
+    }
+
+    public String appointmentConfirmation(){
+        return appointmentConfirmationText.getText();
+    }
+
+    public String setAppointmentPageText(){
+        return appointmentPageText.getText();
     }
 
     public void selectFacility(int index){
@@ -69,4 +85,6 @@ public class AppointmentPage {
     public void clickBookAppointment(){
         book_appointment_btn.click();
     }
+
+
 }

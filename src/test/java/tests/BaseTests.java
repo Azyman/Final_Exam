@@ -27,13 +27,14 @@ public class BaseTests {
         //options.addArguments("--headless");
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().deleteAllCookies();
+        driver.manage().window().maximize();
         driver.get(BASEURL);
         landingPage = new LandingPage(driver);
     }
 
-
+/*
     @AfterMethod
     public void captureScreenShots(ITestResult testResult){
 
@@ -59,7 +60,7 @@ public class BaseTests {
             }
 
         }
-    }
+    }*/
 
     @AfterMethod
     public void tearDown(){
