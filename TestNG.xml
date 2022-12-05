@@ -6,7 +6,12 @@
         <classes>
             <class name="tests.LoginPageTest">
                 <methods>
-                    <include name="login" />
+                    <include name="loginTest" />
+                </methods>
+            </class>
+            <class name="tests.AppointmentPageTest">
+                <methods>
+                    <include name="submitAppointmentInfor" />
                 </methods>
             </class>
         </classes>
