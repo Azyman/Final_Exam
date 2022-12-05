@@ -1,53 +1,59 @@
 package tests;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.AppointmentPage;
 import pages.LoginPage;
 
+import java.io.File;
+
 
 public class AppointmentPageTest extends BaseTests{
     AppointmentPage appointmentPage;
-    @Test(priority = 1)
-    public void submitAppointmentInfor() throws InterruptedException {
+    @Test(dataProvider = "facilities")
+    public void submitAppointmentInfor(Integer index_local,String value,String visit_date,String comment) throws InterruptedException {
+
         LoginPage loginPage = new LoginPage(BaseTests.driver);
         landingPage.clickMakeAppointment();
-        loginPage.login("John Doe","ThisIsNotAPassword");
         appointmentPage = new AppointmentPage(driver);
+        loginPage.login("John Doe","ThisIsNotAPassword");
 
         Assert.assertEquals(appointmentPage.setAppointmentPageText(),"Make Appointment");
 
-        appointmentPage.selectFacility(2);
+        appointmentPage.selectFacility(index_local);
         appointmentPage.clickApplyForAdmission();
-        appointmentPage.selectHealthProgram();// set this to accept index again so that we can pass same index as above
-        appointmentPage.selectVisitDate("01/12/2022");
-        appointmentPage.setComment("This is my first comment");
+        appointmentPage.setHealthcare_program(value,driver);
+        appointmentPage.selectVisitDate(visit_date);
+        appointmentPage.setComment(comment);
         Thread.sleep(3000);
         appointmentPage.clickBookAppointment();
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         Assert.assertEquals(appointmentPage.appointmentConfirmation(),"Appointment Confirmation");
 
     }
-/*
-    @Test(priority = 2)
-    public void bookAppointment(){
-        appointmentPage.selectFacility(0);
-        appointmentPage.clickApplyForAdmission();
-        appointmentPage.selectHealthProgram();// set this to accept index again so that we can pass same index as above
-        appointmentPage.selectVisitDate("01/12/2022");
-        appointmentPage.setComment("This is my first comment");
-        appointmentPage.clickBookAppointment();
-    }
 
-    @DataProvider(name = "facilityData")
-    public Object[][] facilities(){
-        Object[][] data = new Object[1][3];
+    @DataProvider(name = "facilities")
+    public static Object[][] facilities(){
+        Object[][] data = new Object[3][4];
         data[0][0] = 0;
-        data[0][1] = 1;
-        data[0][2] = 2;
+        data[0][1] = "Medicare";
+        data[0][2] = "12/12/2022";
+        data[0][3] = "My first appointment with my doctor on 12/12/2022";
+
+        data[1][0] = 1;
+        data[1][1] = "Medicaid";
+        data[1][2] = "15/12/2022";
+        data[1][3] = "My second appointment with my doctor on 15/12/2022";
+
+        data[2][0] = 2;
+        data[2][1] = "None";
+        data[2][2] = "20/12/2022";
+        data[2][3] = "My third appointment with my doctor on 20/12/2022";
         return data;
     }
-*/
 }

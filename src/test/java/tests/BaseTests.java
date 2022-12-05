@@ -1,5 +1,8 @@
 package tests;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -14,17 +17,33 @@ import pages.LandingPage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTests {
 
     public static WebDriver driver;
     protected LandingPage landingPage;
+    public ExtentSparkReporter extentSparkReporter;
+    public ExtentReports report;
+    Calendar calendar ;
+
     String BASEURL = "https://katalon-demo-cura.herokuapp.com/";
+
     @BeforeMethod
     public void setup(){
+
+        calendar = Calendar.getInstance();
+
+        extentSparkReporter = new ExtentSparkReporter(new File("./resources/Reports/"+this.getClass().getSimpleName()+"_"+calendar.getTimeInMillis()+"_"+"TestReport.html"));
+        report = new ExtentReports();
+
+        report.attachReporter(extentSparkReporter);
+        report.createTest(this.getClass().getSimpleName()).log(Status.PASS, "This is a logging event for MyFirstTest, and it passed!");
+
         ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--headless");
+
+        options.addArguments("--headless");
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -32,9 +51,10 @@ public class BaseTests {
         driver.manage().window().maximize();
         driver.get(BASEURL);
         landingPage = new LandingPage(driver);
+
     }
 
-/*
+
     @AfterMethod
     public void captureScreenShots(ITestResult testResult){
 
@@ -58,13 +78,14 @@ public class BaseTests {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
+            report.flush();
         }
-    }*/
+
+    }
 
     @AfterMethod
     public void tearDown(){
-        //driver.quit();
+        driver.quit();
     }
 
 

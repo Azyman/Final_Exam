@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -16,18 +17,6 @@ public class AppointmentPage {
     @FindBy(xpath = "//input[@name='hospital_readmission']")
     @CacheLookup
     WebElement readmission_chk_box;
-
-    @FindBy(id = "radio_program_medicare")
-    @CacheLookup
-    WebElement program_medicare;
-
-    @FindBy(id = "radio_program_medicaid")
-    @CacheLookup
-    WebElement program_medicaid;
-
-    @FindBy(id = "radio_program_none")
-    @CacheLookup
-    WebElement program_none;
 
     @FindBy(id = "txt_visit_date")
     @CacheLookup
@@ -49,6 +38,12 @@ public class AppointmentPage {
     @CacheLookup
     WebElement appointmentConfirmationText;
 
+    WebDriver driver;
+    public void setHealthcare_program(String value, WebDriver driver) {
+        this.driver = driver;
+        driver.findElement(By.xpath("//input[@value='"+value+"']")).click();
+    }
+
     public AppointmentPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -61,17 +56,13 @@ public class AppointmentPage {
         return appointmentPageText.getText();
     }
 
-    public void selectFacility(int index){
+    public void selectFacility(Integer index){
         Select facilities = new Select(facility);
         facilities.selectByIndex(index);
     }
 
     public void clickApplyForAdmission(){
         readmission_chk_box.click();
-    }
-
-    public void selectHealthProgram(){
-        program_medicare.click();
     }
 
     public void selectVisitDate(String visit_date1){
@@ -85,6 +76,5 @@ public class AppointmentPage {
     public void clickBookAppointment(){
         book_appointment_btn.click();
     }
-
 
 }
