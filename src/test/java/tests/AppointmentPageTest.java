@@ -1,16 +1,10 @@
 package tests;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.AppointmentPage;
 import pages.LoginPage;
-
-import java.io.File;
-
 
 public class AppointmentPageTest extends BaseTests{
     AppointmentPage appointmentPage;
@@ -40,6 +34,7 @@ public class AppointmentPageTest extends BaseTests{
     @DataProvider(name = "facilities")
     public static Object[][] facilities(){
         Object[][] data = new Object[3][4];
+
         data[0][0] = 0;
         data[0][1] = "Medicare";
         data[0][2] = "12/12/2022";
@@ -54,6 +49,7 @@ public class AppointmentPageTest extends BaseTests{
         data[2][1] = "None";
         data[2][2] = "20/12/2022";
         data[2][3] = "My third appointment with my doctor on 20/12/2022";
+
         return data;
     }
 }

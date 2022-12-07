@@ -18,9 +18,10 @@ public class LoginPageTest extends BaseTests{
     @DataProvider
     public static Object[][] loginCredentials(){
         Object[][] data = new Object[1][2];
+
         data[0][0] = "John Doe";
         data[0][1] = "ThisIsNotAPassword";
+
         return data;
     }
-
 }

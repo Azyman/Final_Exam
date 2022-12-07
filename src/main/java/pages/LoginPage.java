@@ -29,7 +29,6 @@ public class LoginPage {
     }
 
     public String verifyLoginText(){
-        System.out.println("verifyLoginText method");
         return login_page_text.getText();
     }
 
