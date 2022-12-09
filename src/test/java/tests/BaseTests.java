@@ -74,7 +74,7 @@ public class BaseTests {
 
             TakesScreenshot screenshot = (TakesScreenshot) driver;
             File source = screenshot.getScreenshotAs(OutputType.FILE);
-            File destination = new File(System.getProperty("user.dir")+"/Resources/screenshots/Failed/"+testResult.getName()+"_"+testResult.getStartMillis()+".png");
+            File destination = new File(System.getProperty("user.dir")+"/resources/screenshots/Failed/"+testResult.getName()+"_"+testResult.getStartMillis()+".png");
             try {
                 FileHandler.copy(source,destination);
             } catch (IOException e) {
@@ -93,7 +93,7 @@ public class BaseTests {
 
             TakesScreenshot screenshot = (TakesScreenshot) driver;
             File source = screenshot.getScreenshotAs(OutputType.FILE);
-            File destination = new File(System.getProperty("user.dir")+"/Resources/screenshots/Passed/"+testResult.getName()+"_"+testResult.getStartMillis()+".png");
+            File destination = new File(System.getProperty("user.dir")+"/resources/screenshots/Passed/"+testResult.getName()+"_"+testResult.getStartMillis()+".png");
             try {
                 FileHandler.copy(source,destination);
             } catch (IOException e) {
