@@ -10,7 +10,7 @@
             </class>
             <class name="tests.AppointmentPageTest">
                 <methods>
-                    <include name="submitAppointmentInfor" />
+                    <include name="submitAppointmentTest" />
                 </methods>
             </class>
         </classes>

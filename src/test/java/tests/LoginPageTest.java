@@ -15,6 +15,7 @@ public class LoginPageTest extends BaseTests{
         loginPage.login(uname, pword);
     }
 
+    //Login details Data Provider
     @DataProvider
     public static Object[][] loginCredentials(){
         Object[][] data = new Object[1][2];

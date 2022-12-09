@@ -8,14 +8,15 @@ import pages.LoginPage;
 
 public class AppointmentPageTest extends BaseTests{
     AppointmentPage appointmentPage;
-    @Test(dataProvider = "facilities")
-    public void submitAppointmentInfor(Integer index_local,String value,String visit_date,String comment) throws InterruptedException {
+    @Test(dataProvider = "FacilityNames")
+    public void submitAppointmentTest(Integer index_local, String value, String visit_date, String comment) throws InterruptedException {
 
         LoginPage loginPage = new LoginPage(BaseTests.driver);
         landingPage.clickMakeAppointment();
         appointmentPage = new AppointmentPage(driver);
         loginPage.login("John Doe","ThisIsNotAPassword");
 
+        //Assert that you have Logged in successfully
         Assert.assertEquals(appointmentPage.setAppointmentPageText(),"Make Appointment");
 
         appointmentPage.selectFacility(index_local);
@@ -27,11 +28,13 @@ public class AppointmentPageTest extends BaseTests{
         appointmentPage.clickBookAppointment();
 
         Thread.sleep(1000);
+        //Assert that you have successfully created an appointment, and you are on Appointment Confirmation page
         Assert.assertEquals(appointmentPage.appointmentConfirmation(),"Appointment Confirmation");
 
     }
 
-    @DataProvider(name = "facilities")
+    //Appointment information Data Provider
+    @DataProvider(name = "FacilityNames")
     public static Object[][] facilities(){
         Object[][] data = new Object[3][4];
 

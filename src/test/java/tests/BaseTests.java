@@ -2,10 +2,12 @@ package tests;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.compress.utils.IOUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -17,8 +19,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pages.LandingPage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +37,7 @@ public class BaseTests {
 
         @BeforeMethod
         public void setup(){
-            //Calender instance to get TimmeInMillis for distinguishing Extent Report names
+            //Calendar instance to get TimmeInMillis for distinguishing Extent Report names
             calendar = Calendar.getInstance();
 
             //Initializing Extent Report
@@ -49,7 +51,7 @@ public class BaseTests {
             extent.setSystemInfo("User Name", "John Doe");
             extentSparkReporter.config().setTimelineEnabled(true);
             extentSparkReporter.config().setTheme(Theme.DARK);
-            logger = extent.createTest(this.getClass().getSimpleName()).log(Status.PASS, "This is a logging event for MyFirstTest, and it passed!");
+            logger = extent.createTest(this.getClass().getSimpleName()).log(Status.PASS, "This is a logging event for "+this.getClass().getSimpleName()+" method");
 
             //Setting up the driver
             ChromeOptions options = new ChromeOptions();
@@ -64,8 +66,9 @@ public class BaseTests {
 
     }
 
+
     @AfterMethod
-    public void captureScreenShots(ITestResult testResult){
+    public void captureScreenShots(ITestResult testResult) throws IOException {
 
         if(ITestResult.FAILURE == testResult.getStatus()){
 
@@ -77,6 +80,14 @@ public class BaseTests {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            //Convert the screenshot to Base64 so that its available for attachment on the report
+            InputStream in = new FileInputStream(source);
+            byte[] imageBytes = IOUtils.toByteArray(in);
+            String base64 = Base64.getEncoder().encodeToString(imageBytes);
+
+            logger.log(Status.FAIL,"Attached Screenshot ", MediaEntityBuilder.createScreenCaptureFromBase64String("data:image/png;base64,"+base64).build());
+
         }
         else if (ITestResult.SUCCESS == testResult.getStatus()) {
 
@@ -88,6 +99,14 @@ public class BaseTests {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            //Convert the screenshot to Base64 so that its available for attachment on the report
+            InputStream in = new FileInputStream(source);
+            byte[] imageBytes = IOUtils.toByteArray(in);
+            String base64 = Base64.getEncoder().encodeToString(imageBytes);
+
+            logger.log(Status.PASS,"Attached Screenshot ", MediaEntityBuilder.createScreenCaptureFromBase64String("data:image/png;base64,"+base64).build());
+
         }
     }
 
@@ -96,5 +115,4 @@ public class BaseTests {
         extent.flush();
         driver.quit();
     }
-
 }
