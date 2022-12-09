@@ -81,7 +81,7 @@ public class BaseTests {
                 throw new RuntimeException(e);
             }
 
-            //Convert the screenshot to Base64 so that its available for attachment on the report
+            //Convert the screenshot to Base64 so that it's available for attachment on the report
             InputStream in = new FileInputStream(source);
             byte[] imageBytes = IOUtils.toByteArray(in);
             String base64 = Base64.getEncoder().encodeToString(imageBytes);
