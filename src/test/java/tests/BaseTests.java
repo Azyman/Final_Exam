@@ -53,7 +53,7 @@ public class BaseTests {
             extent.setSystemInfo("User Name", "John Doe");
             extentSparkReporter.config().setTimelineEnabled(true);
             extentSparkReporter.config().setTheme(Theme.DARK);
-            logger = extent.createTest(this.getClass().getSimpleName()).log(Status.PASS, "This is a logging event for "+this.getClass().getSimpleName()+" method");
+            logger = extent.createTest(this.getClass().getSimpleName()).log(Status.PASS, "This is my logging event for "+this.getClass().getSimpleName()+" method");
 
             properties = new Properties();
             FileInputStream inputStream = new FileInputStream("./config.properties");
