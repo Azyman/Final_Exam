@@ -14,7 +14,7 @@ public class AppointmentPageTest extends BaseTests{
         LoginPage loginPage = new LoginPage(BaseTests.driver);
         landingPage.clickMakeAppointment();
         appointmentPage = new AppointmentPage(driver);
-        loginPage.login("John Doe","ThisIsNotAPassword");
+        loginPage.login(properties.getProperty("username"), properties.getProperty("password"));
 
         //Assert that you have Logged in successfully
         Assert.assertEquals(appointmentPage.setAppointmentPageText(),"Make Appointment");

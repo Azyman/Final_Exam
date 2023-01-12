@@ -22,6 +22,7 @@ import pages.LandingPage;
 import java.io.*;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTests {
@@ -32,11 +33,12 @@ public class BaseTests {
     public ExtentReports extent;
     public ExtentTest logger;
     Calendar calendar;
+    public static Properties properties;
 
     String BASEURL = "https://katalon-demo-cura.herokuapp.com/";
 
         @BeforeMethod
-        public void setup(){
+        public void setup() throws FileNotFoundException {
             //Calendar instance to get TimmeInMillis for distinguishing Extent Report names
             calendar = Calendar.getInstance();
 
@@ -53,6 +55,13 @@ public class BaseTests {
             extentSparkReporter.config().setTheme(Theme.DARK);
             logger = extent.createTest(this.getClass().getSimpleName()).log(Status.PASS, "This is a logging event for "+this.getClass().getSimpleName()+" method");
 
+            properties = new Properties();
+            FileInputStream inputStream = new FileInputStream("./config.properties");
+            try {
+                properties.load(inputStream);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             //Setting up the driver
             ChromeOptions options = new ChromeOptions();
             //options.addArguments("--headless");
